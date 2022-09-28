@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  web:
+    image: node
+    working_dir: /usr/src/app
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - ${PORT}:${PORT}
+    command: bash -c "npm install && npm start"
+    links:
+      - bdd
+  bdd:
+    image: postgres:alpine
+    environment:
+      - POSTGRES_DB=docker
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    ports:
+      - 5432:5432
